@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { Characters } from './Characters';
+import { Character } from './Character';
 import './App.css'
 
 export function App() {
-  const [characters, setCharacters] = useState([]);
-  useEffect(() => {
-    fetch("/api/characters").then(res => res.json()).then(res => setCharacters(res))
-  }, []);
   return (
     <>
-      {characters.map(character =>
-        <h1 key={character.name}>{character.name}</h1>
-      )}
+      <Routes>
+        <Route path="/" element={<Characters />}></Route>
+        <Route path="/characters/:id" element={<Character />}></Route>
+      </Routes>
     </>
   )
 }
