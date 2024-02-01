@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 export function Character(props) {
   let { id } = useParams();
   const [character, setCharacter] = useState([]);
   const [planet, setPlanet] = useState([]);
   const [films, setFilms] = useState([]);
-  
+
 
   useEffect(() => {
     fetch(`/api/characters/${id}`).then(res => res.json()).then(res => setCharacter(res))
@@ -34,9 +34,13 @@ export function Character(props) {
     </section>
     <section id="films">
       <h2>Films appeared in</h2>
-      <ul>
-      {films.map(film => <li>{film.title}</li>)}
-      </ul>
+      {films.map(film =>
+        <>
+          <Link to={`/films/${film.id}`}>
+            <button key={film.title}>{film.title}</button>
+          </Link>
+        </>
+      )}
     </section>
   </>)
 }
