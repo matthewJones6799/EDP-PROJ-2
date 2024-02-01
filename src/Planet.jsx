@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
 
-export function Character(props) {
+export function Planet(props) {
   let { id } = useParams();
   const [characters, setCharacters] = useState([]);
   const [planet, setPlanet] = useState([]);
@@ -17,7 +17,7 @@ export function Character(props) {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/characters/${id}/characters`).then(res => res.json()).then(res => setCharacters(res))
+    fetch(`/api/planets/${id}/characters`).then(res => res.json()).then(res => setCharacters(res))
   }, []);
 
 
@@ -39,10 +39,10 @@ export function Character(props) {
     <section id="characters">
       <h2>Characters In This Movie</h2>
       <p>{planet.name}</p>
-      <p>{character.homeworld}</p>
+      <p>{characters.map(character => <li>{character.title}</li>)}</p>
     </section>
     <section id="films">
-      <h2>Films appeared in</h2>
+      <h2>Films Featuring This Planet</h2>
       <ul>
       {films.map(film => <li>{film.title}</li>)}
       </ul>
