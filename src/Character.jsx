@@ -3,23 +3,29 @@ import { Link, useParams } from "react-router-dom"
 
 export function Character() {
   let { id } = useParams();
-  const [character, setCharacter] = useState([]);
-  const [planet, setPlanet] = useState([]);
+  const [character, setCharacter] = useState({});
+  const [planet, setPlanet] = useState({});
   const [films, setFilms] = useState([]);
 
 
   useEffect(() => {
-    fetch(`/api/characters/${id}`).then(res => res.json()).then(res => setCharacter(res))
+    let char;
+    fetch(`/api/characters/${id}`)
+      .then(res => res.json())
+      .then(character => { char = character; return character })
+      .then(character => setCharacter(character))
+      .then(() => fetch(`/api/planets/${char.homeworld}`))
+      .then(res => res.json())
+      .then(homeworld => setPlanet(homeworld))
   }, []);
 
   useEffect(() => {
-    fetch(`/api/characters/${id}/films`).then(res => res.json()).then(res => setFilms(res))
+    fetch(`/api/characters/${id}/films`).then(res => res.json()).then(res => setFilms(() => res))
   }, []);
 
   useEffect(() => {
-    fetch(`/api/planets/${character.homeworld}`).then(res => res.json()).then(res => setPlanet(res))
   }, []);
-
+  console.log(character);
   return (<>
     <h1>{character.name}</h1>
     <section id="generalInfo">
@@ -29,17 +35,17 @@ export function Character() {
     </section>
     <section id="planets">
       <h2>Homeworld</h2>
-      <p>{planet.name}</p>
-      <p>{character.homeworld}</p>
+      <Link key={planet.id} to={`/planets/${planet.id}`}>
+        <button key={planet.name}>{planet.name}</button>
+      </Link>
     </section>
     <section id="films">
       <h2>Films appeared in</h2>
       {films.map(film =>
-        <>
-          <Link to={`/films/${film.id}`}>
-            <button key={film.title}>{film.title}</button>
-          </Link>
-        </>
+        <Link key={film.id} to={`/films/${film.id}`}>
+          <button key={film.title}>{film.title}</button>
+        </Link>
+
       )}
     </section>
   </>)

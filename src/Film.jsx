@@ -25,6 +25,7 @@ export function Film() {
   return (<>
     <h1>{film.title}</h1>
     <section id="generalInfo">
+      <p>{film.opening_crawl}</p>
       <p>Released: {film.release_date}</p>
       <p>Director: {film.director}</p>
       <p>Episode: {film.episode_id}</p>
