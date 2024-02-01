@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
+
 
 export function Planet(props) {
   let { id } = useParams();
@@ -37,15 +38,19 @@ export function Planet(props) {
 
 
     <section id="characters">
-      <h2>Characters In This Movie</h2>
-      <p>{planet.name}</p>
-      <p>{characters.map(character => <li>{character.title}</li>)}</p>
+      <h2>Characters Born Here</h2>
+      <p>{characters.map(character => <li>{character.name}</li>)}</p>
     </section>
+
     <section id="films">
       <h2>Films Featuring This Planet</h2>
-      <ul>
-      {films.map(film => <li>{film.title}</li>)}
-      </ul>
+        {films.map(film => 
+        <>
+          <Link to={`/films/${film.id}`}>
+            <button key={film.title}>{film.title}</button>
+          </Link>
+        </>
+        )}
     </section>
   </>)
 }
