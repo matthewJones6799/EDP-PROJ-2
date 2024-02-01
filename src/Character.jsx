@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom"
 
-export function Character(props) {
+export function Character() {
   let { id } = useParams();
   const [character, setCharacter] = useState([]);
   const [planet, setPlanet] = useState([]);
@@ -44,6 +44,3 @@ export function Character(props) {
     </section>
   </>)
 }
-
-
-// const filmsLis = character?.films?.map(film => `<li><a href="/films.html?id=${film.id}">${film.title}</li>`)

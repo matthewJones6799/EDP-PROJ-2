@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from "react-router-dom"
 
-export function Film(props) {
+export function Film() {
   let { id } = useParams();
   const [film, setFilm] = useState([]);
   const [characters, setCharacters] = useState([]);

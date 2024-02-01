@@ -7,7 +7,7 @@ export function Planet(props) {
   const [characters, setCharacters] = useState([]);
   const [planet, setPlanet] = useState([]);
   const [films, setFilms] = useState([]);
-  
+
 
   useEffect(() => {
     fetch(`/api/planets/${id}`).then(res => res.json()).then(res => setPlanet(res))
@@ -39,18 +39,24 @@ export function Planet(props) {
 
     <section id="characters">
       <h2>Characters Born Here</h2>
-      <p>{characters.map(character => <li>{character.name}</li>)}</p>
+      {characters.map(character =>
+        <>
+          <Link to={`/characters/${character.id}`}>
+            <button key={character.name}>{character.name}</button>
+          </Link>
+        </>
+      )}
     </section>
 
     <section id="films">
       <h2>Films Featuring This Planet</h2>
-        {films.map(film => 
+      {films.map(film =>
         <>
           <Link to={`/films/${film.id}`}>
             <button key={film.title}>{film.title}</button>
           </Link>
         </>
-        )}
+      )}
     </section>
   </>)
 }
